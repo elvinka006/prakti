@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>МахмутоваLoan</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      }
+
+      .calculator-container {
+        width: 100%;
+        max-width: 500px;
+        padding: 2rem;
+      }
+
+      .calculator {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease;
+      }
+
+      .calculator:hover {
+        transform: translateY(-5px);
+      }
+
+      .calculator-header {
+        background: linear-gradient(to right, #4776e6, #8e54e9);
+        color: white;
+        padding: 1.5rem;
+        text-align: center;
+      }
+
+      .calculator-header h1 {
+        margin: 0;
+        font-weight: 600;
+        font-size: 1.8rem;
+      }
+
+      .calculator-body {
+        padding: 1.5rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #555;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      .input-wrapper {
+        position: relative;
+      }
+
+      .input-wrapper input {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s;
+      }
+
+      .input-wrapper input:focus {
+        outline: none;
+        border-color: #8e54e9;
+        box-shadow: 0 0 0 3px rgba(142, 84, 233, 0.2);
+      }
+
+      .input-wrapper::after {
+        content: "";
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #777;
+      }
+
+      #loan-amount::after {
+        content: "₽";
+      }
+
+      #interest-rate::after {
+        content: "%";
+      }
+
+      #loan-term::after {
+        content: "лет";
+      }
+
+      button {
+        width: 100%;
+        padding: 1rem;
+        background: linear-gradient(to right, #4776e6, #8e54e9);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 0.5rem;
+      }
+
+      button:hover {
+        background: linear-gradient(to right, #3a6bd9, #7d48d6);
+        box-shadow: 0 5px 15px rgba(71, 118, 230, 0.4);
+      }
+
+      .result {
+        margin-top: 1.5rem;
+        background: #f9f9f9;
+        border-radius: 10px;
+        padding: 1.5rem;
+        display: none;
+        animation: fadeIn 0.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .result h3 {
+        margin-top: 0;
+        color: #333;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #eee;
+      }
+
+      .result-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.8rem;
+        font-size: 1rem;
+      }
+
+      .result-value {
+        font-weight: 600;
+        color: #333;
+      }
+
+      .monthly-payment .result-value {
+        color: #4776e6;
+        font-size: 1.2rem;
+      }
+
+      .total-interest .result-value {
+        color: #e63946;
+      }
+
+      .total-payment {
+        padding-top: 0.8rem;
+        border-top: 1px solid #eee;
+        margin-top: 0.8rem;
+        font-weight: 600;
+      }
+
+      .effective-rate {
+        font-size: 0.9rem;
+        color: #666;
+        margin-top: 1rem;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="calculator-container">
+      <div class="calculator">
+        <div class="calculator-header">
+          <h1>Кредитный калькулятор</h1>
+        </div>
+
+        <div class="calculator-body">
+          <div class="form-group">
+            <label for="loan-amount">Сумма кредита</label>
+            <div class="input-wrapper">
+              <input
+                type="number"
+                id="loan-amount"
+                placeholder="100 000"
+                min="1000"
+                value="100000"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="interest-rate">Процентная ставка</label>
+            <div class="input-wrapper">
+              <input
+                type="number"
+                id="interest-rate"
+                placeholder="10"
+                min="0"
+                step="0.01"
+                value="10"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="loan-term">Срок кредита</label>
+            <div class="input-wrapper">
+              <input
+                type="number"
+                id="loan-term"
+                placeholder="5"
+                min="1"
+                max="30"
+                value="5"
+              />
+            </div>
+          </div>
+
+          <button onclick="calculateLoan()">Рассчитать платежи</button>
+
+          <div class="result" id="result">
+            <h3>Результаты расчета</h3>
+            <div class="result-item monthly-payment">
+              <span>Ежемесячный платеж:</span>
+              <span class="result-value"
+                ><span id="monthly-payment">0</span> ₽</span
+              >
+            </div>
+            <div class="result-item total-interest">
+              <span>Общая переплата:</span>
+              <span class="result-value"
+                ><span id="total-interest">0</span> ₽</span
+              >
+            </div>
+            <div class="result-item total-payment">
+              <span>Общая сумма выплат:</span>
+              <span class="result-value"
+                ><span id="total-payment">0</span> ₽</span
+              >
+            </div>
+            <div class="effective-rate">
+              Эффективная ставка: <span id="effective-rate">0</span>%
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function calculateLoan() {
+        // Получаем значения из полей ввода
+        const loanAmount =
+          parseFloat(document.getElementById("loan-amount").value) || 0;
+        const interestRate =
+          parseFloat(document.getElementById("interest-rate").value) || 0;
+        const loanTermYears =
+          parseInt(document.getElementById("loan-term").value) || 0;
+
+        // Рассчитываем дополнительные параметры
+        const monthlyInterestRate = interestRate / 100 / 12;
+        const loanTermMonths = loanTermYears * 12;
+
+        // Рассчитываем ежемесячный платеж по формуле аннуитета
+        const monthlyPayment =
+          (loanAmount *
+            monthlyInterestRate *
+            Math.pow(1 + monthlyInterestRate, loanTermMonths)) /
+          (Math.pow(1 + monthlyInterestRate, loanTermMonths) - 1);
+
+        // Рассчитываем общую сумму выплат и переплату
+        const totalPayment = monthlyPayment * loanTermMonths;
+        const totalInterest = totalPayment - loanAmount;
+
+        // Рассчитываем эффективную процентную ставку
+        const effectiveRate =
+          (totalInterest / loanAmount / loanTermYears) * 100;
+
+        // Форматируем числа с разделителями тысяч
+        const formatNumber = (num) => {
+          return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$& ");
+        };
+
+        // Отображаем результаты
+        document.getElementById("monthly-payment").textContent =
+          formatNumber(monthlyPayment);
+        document.getElementById("total-payment").textContent =
+          formatNumber(totalPayment);
+        document.getElementById("total-interest").textContent =
+          formatNumber(totalInterest);
+        document.getElementById("effective-rate").textContent =
+          effectiveRate.toFixed(2);
+
+        // Показываем блок с результатами с анимацией
+        const resultElement = document.getElementById("result");
+        resultElement.style.display = "block";
+        resultElement.style.animation = "none";
+        setTimeout(() => {
+          resultElement.style.animation = "fadeIn 0.5s ease";
+        }, 10);
+      }
+
+      // Рассчитываем при загрузке страницы
+      window.onload = calculateLoan;
+
+      // Пересчитываем при изменении любых полей ввода
+      document.querySelectorAll("input").forEach((input) => {
+        input.addEventListener("input", calculateLoan);
+      });
+    </script>
+  </body>
+</html>

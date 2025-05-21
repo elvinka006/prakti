@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Махмутовамакет</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="calculator">
+      <h1>РАССЧИТАЙТЕ стоимость ремонта</h1>
+
+      <div class="section">
+        <div class="section-title">Вид ремонта:</div>
+        <div class="radio-group">
+          <div class="radio-column">
+            <label class="radio-option">
+              <input type="radio" name="repair-type" value="cosmetic" checked />
+              Косметический
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="repair-type" value="turnkey" /> Под ключ
+            </label>
+          </div>
+          <div class="radio-column">
+            <label class="radio-option">
+              <input type="radio" name="repair-type" value="capital" />
+              Капитальный
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="repair-type" value="designer" />
+              Дизайнерский
+            </label>
+          </div>
+        </div>
+      </div>
+<div class="section">
+        <div class="section-title">Тип вашей недвижимости:</div>
+        <div class="radio-group">
+          <div class="radio-column">
+            <label class="radio-option">
+              <input type="radio" name="property-type" value="new" checked /> Новостройка
+            </label>
+          </div>
+          <div class="radio-column">
+            <label class="radio-option">
+              <input type="radio" name="property-type" value="secondary" />
+              Вторичное жилье
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Количество комнат:</div>
+        <div class="radio-group" style="gap: 15px">
+          <label class="radio-option">
+            <input type="radio" name="rooms" value="1" /> 1
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="rooms" value="2" checked /> 2
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="rooms" value="3" /> 3
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="rooms" value="4" /> 4
+          </label>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Площадь, м²:</div>
+        <div class="slider-container">
+          <div class="slider-wrapper">
+            <input
+              type="range"
+              min="20"
+              max="200"
+              value="50"
+              class="slider"
+              id="area-slider"
+            />
+            <div class="slider-value" id="area-value">50 м²</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="distime">
+        <div class="deadline">
+          <div>Срок ремонта:</div>
+          <span class="time" id="repairTime">до 20 дней</span>
+        </div>
+        <div class="discount">
+          <div>Скидка составит:</div>
+          <div class="discount-amount" id="discount">23 765 руб.</div>
+        </div>
+      </div>
+
+      <button class="calculate-btn">Рассчитать</button>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
